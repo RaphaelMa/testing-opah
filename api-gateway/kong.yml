@@ -1,0 +1,76 @@
+_format_version: "3.0"
+_transform: true
+
+services:
+  - name: transactions-service
+    url: http://transactions-api:5002
+    routes:
+      - name: transactions-route
+        paths:
+          - /api/transactions
+        strip_path: false
+        methods:
+          - GET
+          - POST
+          - PUT
+          - DELETE
+    plugins:
+      - name: rate-limiting
+        config:
+          minute: 5000
+          second: 100
+          hour: 100000
+          policy: local
+      - name: cors
+        config:
+          origins:
+            - "*"
+          methods:
+            - GET
+            - POST
+            - PUT
+            - DELETE
+            - OPTIONS
+          headers:
+            - Accept
+            - Accept-Language
+            - Content-Language
+            - Content-Type
+            - Authorization
+          exposed_headers:
+            - X-Request-Id
+          credentials: true
+          max_age: 3600
+
+  - name: consolidated-service
+    url: http://consolidated-api:5001
+    routes:
+      - name: consolidated-route
+        paths:
+          - /api/dailybalances
+        strip_path: false
+        methods:
+          - GET
+    plugins:
+      - name: rate-limiting
+        config:
+          minute: 100
+          hour: 5000
+          policy: local
+      - name: cors
+        config:
+          origins:
+            - "*"
+          methods:
+            - GET
+            - OPTIONS
+          headers:
+            - Accept
+            - Accept-Language
+            - Content-Language
+            - Content-Type
+            - Authorization
+          exposed_headers:
+            - X-Request-Id
+          credentials: true
+          max_age: 3600

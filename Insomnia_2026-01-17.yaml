@@ -1,0 +1,93 @@
+type: collection.insomnia.rest/5.0
+schema_version: "5.1"
+name: Desafio Tecnico - Opah Carrefour
+meta:
+  id: wrk_2fc395a4a3ca461eac5ed38cd46377e5
+  created: 1768675899322
+  modified: 1768675899322
+  description: ""
+collection:
+  - name: Gateway
+    meta:
+      id: fld_5dfab32126fc40a98a524ee4f838b12d
+      created: 1768679019435
+      modified: 1768679019435
+      sortKey: -1768679019435
+      description: ""
+    children:
+      - url: http://localhost:8000/api/transactions
+        name: transactions
+        meta:
+          id: req_2e4e4c7bab104e55908ac97565d78259
+          created: 1768679028019
+          modified: 1768684216522
+          isPrivate: false
+          description: ""
+          sortKey: -1768679028019
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"merchantId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+            	"type": 1,
+            	"amount": 500,
+            	"transactionDate": "2025-01-17T16:30:00Z"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8000/api/dailybalances
+        name: consolidate
+        meta:
+          id: req_f8feac814788466ea5425b0273034b67
+          created: 1768679097656
+          modified: 1768684390899
+          isPrivate: false
+          description: ""
+          sortKey: -1768679097656
+        method: GET
+        parameters:
+          - name: merchantId
+            value: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+            disabled: false
+          - name: date
+            value: 2025-01-17
+            disabled: false
+          - name: startDate
+            value: 2025-01-15
+            description: ""
+            disabled: false
+          - name: endDate
+            value: 2025-01-17
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_f70dd1bc9673284e202e18c83c1aff28c9e1e7f4
+    created: 1768675899325
+    modified: 1768675899325
+environments:
+  name: Base Environment
+  meta:
+    id: env_f70dd1bc9673284e202e18c83c1aff28c9e1e7f4
+    created: 1768675899324
+    modified: 1768675899324
+    isPrivate: false
